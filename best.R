@@ -5,19 +5,15 @@ best <- function(state, outcome) {
         
         
         ## Check that state and outcome are valid
-        if(!state %in% state.abb)) {
-                stop("invalid state")
-        }
-        if(!outcome %in% outcome_options)
-                stop("invalid outcome")
-        }
+        if(!state %in% state.abb) stop("invalid state")
+        if(!outcome %in% names(outcome_options)) stop("invalid outcome")
+        
 
-        ## subset data to state indicated in function
+        ## subset data to state indicated in function and then select min hospital for that outcome
         state_select <- outcome_data[outcome_data$State == state,]
+        state_select[,outcome],na.rm = TRUE
         
-                                        #old pollutantmean: select the variable for which to print the mean
-                max(outcome_data[,outcome],na.rm = TRUE)
-        
+        ##find the row, save to variable, print the name col of that row?
                 ##outcome options are 
                 #Column 11 is heart attack mortality
                 #Column 17 is heart failure mortality
