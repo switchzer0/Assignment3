@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "best <- function(state, outcome) {\n        #set outcome options and check that state and outcome are valid\n        outcome_options <- c(\"heart attack\"=11, \"heart failure\"=17, \"pneumonia\"=23)\n        if(!state %in% state.abb) stop(\"invalid state\")\n        if(!outcome %in% names(outcome_options)) stop(\"invalid outcome\")\n\n\n        ## Read outcome data subsetting selecting relevant columns\n        outcome_data <- read.csv(\"outcome-of-care-measures.csv\")[,c(2,7,outcome_options[outcome])]\n\n\n        ## subset data to state indicated in function and then select min hospital for that outcome\n        \n        data_by_state <- outcome_data[outcome_data$State == state,]\n        sortorder <- c(names(data_by_state[3]),names(data_by_state[1]))\n        \n        sorted <- data_by_state[order(names(data_by_state[3]),names(data_by_state[1])),]\n                \n                \n                ##template: with(score, score[order(sex, y, x),])\n                sortorder <- c(names(data_by_state[2]),names(data_by_state[3]),names(data_by_state[1]))\n                with(data_by_state, data_by_state[order(sortorder),])\n                \n                \n                best_row <- which.min(data_by_state[,3])\n        data_by_state$Hospital.Name[best_row]\n}",
+    "created" : 1482781529327.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2880773683",
+    "id" : "7485B1A9",
+    "lastKnownWriteTime" : 1482889725,
+    "last_content_update" : 1482889725769,
+    "path" : "~/Documents/DataScience/RProgramming/Assignment3/best.R",
+    "project_path" : "best.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_source"
+}
