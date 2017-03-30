@@ -12,9 +12,13 @@ best <- function(state, outcome) {
 
         ## subset data to state indicated in function and then select min hospital for that outcome
         state_subset <- outcome_data[outcome_data$State == state,]
-        outcome_subset <- state_subset[state_subset$outcome == !is.na]
-        sorted_outcome <-  state_subset[order(state_subset$Hospital.Name),]
-        ##sorted_outcome[sorted_outcome$]
-        best_row <- which.min(sorted_outcome[[outcome]])
+
+                ##get rid of NAs in outcome column
+        
+                ##order alphabetically so that first column is selected by "best.row" function
+                sorted_outcome <-  state_subset[order( "Hospital.Name", na.last = NA),]
+        
+        ##select min value row and print as char vector
+        best_row <- which.min(sorted_outcome[[outcome]]s)
         as.character(sorted_outcome$Hospital.Name[best_row])
 }
