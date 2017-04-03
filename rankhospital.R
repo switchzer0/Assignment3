@@ -1,7 +1,7 @@
 rankhospital <-function(state, outcome, num = "best") {
         
         #read OOCM.csv
-        outcome_data <- read.csv("outcome-of-care-measures.csv")
+        outcome_data <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
         outcome_options <- c("heart attack", "heart failure", "pneumonia")
         colnames(outcome_data)[c(11,17,23)] <- outcome_options
         
@@ -11,8 +11,7 @@ rankhospital <-function(state, outcome, num = "best") {
         
         #remove hospitals w/ NA on the given outcome
         state_subset <- outcome_data[outcome_data$State == state,]
-        sorted_outcome <-  state_subset[order(state_subset[outcome],state_subset$Hospital.Name, na.last = NA),]
-        
+        sorted_outcome <-  state_subset[order(as.numeric(state_subset[[outcome]]),state_subset$Hospital.Name, na.last = NA),]
         
         #define num parameters: best = 1, worst = nrows, interger = that row number, too-large number = NA
                 if (num == "best") {index <- 1
