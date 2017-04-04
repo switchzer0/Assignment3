@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "best <- function(state, outcome) {\n        ## Read outcome data, identify columns\n        outcome_data <- read.csv(\"outcome-of-care-measures.csv\",  colClasses = \"character\")\n        outcome_options <- c(\"heart attack\", \"heart failure\", \"pneumonia\")\n        colnames(outcome_data)[c(11,17,23)] <- outcome_options\n        \n        #check that state and outcome are valid\n        if(!state %in% state.abb) stop(\"invalid state\")\n        if(!outcome %in% outcome_options) stop(\"invalid outcome\")\n\n        ## subset data to state indicated in function and then order data outcome min first, then by alpha\n        state_subset <- outcome_data[outcome_data$State == state,]\n        sorted_outcome <-  state_subset[order(as.numeric(state_subset[[outcome]]),state_subset$Hospital.Name, na.last = NA),]\n        \n        ##print as char\n        as.character(sorted_outcome$Hospital.Name[1])\n}",
+    "created" : 1491305805805.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "624207762",
+    "id" : "4987173C",
+    "lastKnownWriteTime" : 1491222937,
+    "last_content_update" : 1491222937,
+    "path" : "~/Documents/DataScience/RProgramming/Assignment3/best.R",
+    "project_path" : "best.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

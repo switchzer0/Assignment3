@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "rankhospital <-function(state, outcome, num = \"best\") {\n        \n        #read OOCM.csv\n        outcome_data <- read.csv(\"outcome-of-care-measures.csv\", colClasses = \"character\")\n        outcome_options <- c(\"heart attack\", \"heart failure\", \"pneumonia\")\n        colnames(outcome_data)[c(11,17,23)] <- outcome_options\n        \n        ## Check that state and outcome are valid: exact messages \"invalid state\" and \"invalid outcome\"\n        if(!state %in% state.abb) stop(\"invalid state\")\n        if(!outcome %in% outcome_options) stop(\"invalid outcome\")\n        \n        #remove hospitals w/ NA on the given outcome\n        state_subset <- outcome_data[outcome_data$State == state,]\n        sorted_outcome <-  state_subset[order(as.numeric(state_subset[[outcome]]),state_subset$Hospital.Name, na.last = NA),]\n        \n        #define num parameters: best = 1, worst = nrows, interger = that row number, too-large number = NA\n                if (num == \"best\") {index <- 1\n                } else if (num == \"worst\") {index <- nrow(sorted_outcome)\n                } else index <- num\n        \n        as.character(sorted_outcome$Hospital.Name[index])\n        #return char vector w/ name of hospital per ranking \"num\", tie breaking by alphabetica\n}\n        ",
+    "created" : 1491305811946.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "761533305",
+    "id" : "B7BA2BB6",
+    "lastKnownWriteTime" : 1491222937,
+    "last_content_update" : 1491222937,
+    "path" : "~/Documents/DataScience/RProgramming/Assignment3/rankhospital.R",
+    "project_path" : "rankhospital.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

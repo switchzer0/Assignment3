@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "rankall <- function(outcome, num = \"best\") {\n        \n        ## Read outcome data\n        outcome_data <- read.csv(\"outcome-of-care-measures.csv\", colClasses = \"character\")\n        outcome_options <- c(\"heart attack\", \"heart failure\", \"pneumonia\")\n        colnames(outcome_data)[c(11,17,23)] <- outcome_options\n        \n        ## Check that state and outcome are valid: exact messages \"invalid state\" and \"invalid outcome\"\n        if(!outcome %in% outcome_options) stop(\"invalid outcome\")\n        \n        #order data and remove hospitals w/ NA on the given outcome\n        outcome_subset <-  outcome_data[order(as.numeric(outcome_data[[outcome]]),outcome_data$Hospital.Name, na.last = NA),]\n        \n        #loop through state list, pulling the \"outcome\" at \"num\" rank from each one and adding it to a data frame\n        ##alternatively, order() by state and then by rank (ascending) and loop selecting 4, 4+50, etc.\n        dat <- data.frame(stringsAsFactors = FALSE)\n        #loop through files, running cor() on those those greater than threshold\n        #does the assignment need state names in alpha order, or the abbrevs? will need to rank state.abb if the former\n        for (i in 1:length(state.abb)) {\n                #get just the next state subset in the list\n                ranked <- outcome_subset[outcome_subset$State == state.abb[i],]\n                #define index parameters\n                if (num == \"best\") {index <- 1\n                        } else if (num == \"worst\") {index <- nrow(ranked)\n                        } else index <- num\n                #grab the hospital name per specified rank (\"num)\n                hosp_name <- ranked$Hospital.Name[index]\n                \n                #append the hospital name and state name to data frame\n                ###ISSUE WITH rbind and \"invalid factor level NA generated\"\n                dat <- rbind.data.frame(dat, c(hosp_name, state.abb[i]))\n                }\n        colnames(dat) <- c(\"hospital\", \"state\")\n        dat\n}\n\n\n## For each state, find the hospital of the given rank\n## Return a data frame with the hospital names and the\n## (abbreviated) state name",
+    "created" : 1491305788285.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4202965717",
+    "id" : "4D4D18C0",
+    "lastKnownWriteTime" : 1491309728,
+    "last_content_update" : 1491309728115,
+    "path" : "~/Documents/DataScience/RProgramming/Assignment3/rankall.R",
+    "project_path" : "rankall.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_source"
+}
